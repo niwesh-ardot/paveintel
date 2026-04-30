@@ -1,0 +1,2 @@
+import { tags } from '@/lib/data/mockData';
+export default function Tags(){const grouped=Object.groupBy(tags,t=>t.category); return <div className='space-y-4'><h2 className='text-2xl font-semibold'>Tags / Taxonomy</h2>{Object.entries(grouped).map(([cat,list])=><div key={cat} className='bg-white border rounded-xl p-4'><h3 className='font-semibold mb-2'>{cat}</h3><div className='flex flex-wrap gap-2'>{(list??[]).map(t=><span key={t.name} className='text-sm border rounded-full px-3 py-1'>{t.name} ({t.count})</span>)}</div></div>)}</div>}
