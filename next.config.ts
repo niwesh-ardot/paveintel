@@ -1,3 +1,16 @@
 import type { NextConfig } from 'next';
-const nextConfig: NextConfig = {};
+
+const isGithubPages = process.env.GITHUB_ACTIONS === 'true';
+const repositoryBasePath = '/paveintel';
+
+const nextConfig: NextConfig = {
+  output: 'export',
+  trailingSlash: true,
+  basePath: isGithubPages ? repositoryBasePath : '',
+  assetPrefix: isGithubPages ? `${repositoryBasePath}/` : undefined,
+  images: {
+    unoptimized: true,
+  },
+};
+
 export default nextConfig;
