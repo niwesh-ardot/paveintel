@@ -1,2 +1,39 @@
 import { documents, researchCards } from '@/lib/data/mockData';
-export default async function Doc({params}:{params:Promise<{id:string}>}){const {id}=await params; const d=documents.find(x=>x.id===id); if(!d) return <div>Document not found.</div>; const rc=researchCards.find(r=>r.documentId===id); return <div className='bg-white border rounded-xl p-6 space-y-3'><h2 className='text-2xl font-semibold'>{d.title}</h2><p>{d.authors.join(', ')} • {d.year} • {d.agency}</p><p className='text-sm text-slate-700'>{d.abstract}</p><h3 className='font-semibold mt-3'>AI-generated key findings (demo/sample)</h3><ul className='list-disc pl-5 text-sm'><li>{d.summary}</li></ul><p className='text-sm'>Methods: {d.methods.join(', ')}</p><p className='text-sm'>Variables: k-value, LTE, D0, deflection basin parameters</p><p className='text-sm'>Limitations: Needs multi-climate validation.</p><p className='text-sm'>Citation info: Demo/sample citation only.</p>{rc && <button className='border rounded px-3 py-2 text-sm'>Generate Research Card</button>}</div>}
+
+export function generateStaticParams() {
+  return documents.map((document) => ({ id: document.id }));
+}
+
+export default async function Doc({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const d = documents.find((x) => x.id === id);
+
+  if (!d) {
+    return <div>Document not found.</div>;
+  }
+
+  const rc = researchCards.find((r) => r.documentId === id);
+
+  return (
+    <div className="bg-white border rounded-xl p-6 space-y-3">
+      <h2 className="text-2xl font-semibold">{d.title}</h2>
+      <p>
+        {d.authors.join(', ')} • {d.year} • {d.agency}
+      </p>
+      <p className="text-sm text-slate-700">{d.abstract}</p>
+      <h3 className="font-semibold mt-3">AI-generated key findings (demo/sample)</h3>
+      <ul className="list-disc pl-5 text-sm">
+        <li>{d.summary}</li>
+      </ul>
+      <p className="text-sm">Methods: {d.methods.join(', ')}</p>
+      <p className="text-sm">Variables: k-value, LTE, D0, deflection basin parameters</p>
+      <p className="text-sm">Limitations: Needs multi-climate validation.</p>
+      <p className="text-sm">Citation info: Demo/sample citation only.</p>
+      {rc && <button className="border rounded px-3 py-2 text-sm">Generate Research Card</button>}
+    </div>
+  );
+}
